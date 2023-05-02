@@ -695,6 +695,13 @@ class CalculTests: XCTestCase {
     
     func testGivenOperand_WhenAddingDot_ThenAnErrorIsOccured() {
         do {
+            try calc.addInteger(number: "1")
+        } catch CalculError.operandError {
+            XCTFail("Integer Fail")
+        } catch {
+            XCTFail("Default Error")
+        }
+        do {
             try calc.addOperator(symbol: "+")
         } catch CalculError.operandError {
             XCTFail("Operand Fail")
@@ -738,6 +745,93 @@ class CalculTests: XCTestCase {
         do {
             try calc.addDot()
         }  catch CalculError.dotError {
+            XCTAssert(true)
+        } catch {
+            XCTFail("Default Error")
+        }
+    }
+    
+    func testGivenResult_WhenAddingAnIntegerAfterTheResult_ThenTestThrowCorrect() {
+        do {
+            try calc.addInteger(number: "1")
+        }  catch CalculError.integerError {
+            XCTFail("Integer Error")
+        } catch {
+            XCTFail("Default Error")
+        }
+        do {
+            try calc.addOperator(symbol: "+")
+        }  catch CalculError.operandError {
+            XCTFail("Operand Error")
+        } catch {
+            XCTFail("Default Error")
+        }
+        do {
+            try calc.addInteger(number: "1")
+        }  catch CalculError.integerError {
+            XCTFail("Integer Error")
+        } catch {
+            XCTFail("Default Error")
+        }
+        do {
+            try calc.equal()
+        }  catch CalculError.integerError {
+            XCTFail("Equal Error")
+        } catch {
+            XCTFail("Default Error")
+        }
+        do {
+            try calc.addInteger(number: "1")
+        }  catch CalculError.integerError {
+            XCTFail("Integer Error")
+        } catch {
+            XCTFail("Default Error")
+        }
+        XCTAssertEqual(calc.result, "1")
+    }
+    
+    func testGivenResult_WhenAddingPlusOperator_ThenTestThrowAnError() {
+        do {
+            try calc.addInteger(number: "1")
+        }  catch CalculError.integerError {
+            XCTFail("Integer Error")
+        } catch {
+            XCTFail("Default Error")
+        }
+        do {
+            try calc.addOperator(symbol: "+")
+        }  catch CalculError.operandError {
+            XCTFail("Operand Error")
+        } catch {
+            XCTFail("Default Error")
+        }
+        do {
+            try calc.addInteger(number: "1")
+        }  catch CalculError.integerError {
+            XCTFail("Integer Error")
+        } catch {
+            XCTFail("Default Error")
+        }
+        do {
+            try calc.equal()
+        }  catch CalculError.integerError {
+            XCTFail("Equal Error")
+        } catch {
+            XCTFail("Default Error")
+        }
+        do {
+            try calc.addOperator(symbol: "+")
+        }  catch CalculError.operandError {
+            XCTAssert(true)
+        } catch {
+            XCTFail("Default Error")
+        }
+    }
+    
+    func testGivenEmptyString_WhenAddingPlusOperator_ThenTestThrowAnError() {
+        do {
+            try calc.addOperator(symbol: "+")
+        }  catch CalculError.operandError {
             XCTAssert(true)
         } catch {
             XCTFail("Default Error")

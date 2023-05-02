@@ -168,7 +168,3 @@ class Calcul {
         result = ""
     }
 }
-
-/// ajouter le test integer et operand
-/// pdf
-/// 
